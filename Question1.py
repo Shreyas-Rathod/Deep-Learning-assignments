@@ -1,67 +1,53 @@
+# Import necessary libraries
 import numpy as np
 import matplotlib.pyplot as plt
-from urllib import request
-import os
-import gzip
-import shutil
+from keras.datasets import fashion_mnist
 
-# Function to download and extract Fashion-MNIST dataset
-def download_fashion_mnist():
-    # URLs for the Fashion-MNIST dataset
-    base_url = "http://fashion-mnist.s3-website.eu-west-1.amazonaws.com/"
-    files = {
-        "train_images": "train-images-idx3-ubyte.gz",
-        "train_labels": "train-labels-idx1-ubyte.gz",
-        "test_images": "t10k-images-idx3-ubyte.gz",
-        "test_labels": "t10k-labels-idx1-ubyte.gz",
-    }
-    
-    # Create directory to store data
-    data_dir = "./fashion_mnist_data"
-    os.makedirs(data_dir, exist_ok=True)
-    
-    # Download and extract each file
-    for key, file_name in files.items():
-        file_path = os.path.join(data_dir, file_name)
-        if not os.path.exists(file_path):
-            print(f"Downloading {file_name}...")
-            request.urlretrieve(base_url + file_name, file_path)
-        
-        # Extract the gzipped file
-        with gzip.open(file_path, 'rb') as f_in:
-            with open(file_path[:-3], 'wb') as f_out:
-                shutil.copyfileobj(f_in, f_out)
+# Download Fashion-MNIST dataset
+(X_train, y_train), (X_test, y_test) = fashion_mnist.load_data()
 
-# Function to load dataset
-def load_images(filename):
-    with open(filename, 'rb') as f:
-        f.read(16)  # Skip header
-        data = np.frombuffer(f.read(), dtype=np.uint8)
-    return data.reshape(-1, 28, 28)
+# Define the class names for Fashion-MNIST
+class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
-def load_labels(filename):
-    with open(filename, 'rb') as f:
-        f.read(8)  # Skip header
-        labels = np.frombuffer(f.read(), dtype=np.uint8)
-    return labels
+# Print dataset shapes to verify data loading
+print("Training data shape:", X_train.shape)
+print("Training labels shape:", y_train.shape)
+print("Test data shape:", X_test.shape)
+print("Test labels shape:", y_test.shape)
 
-# Download and load the dataset
-download_fashion_mnist()
+# Create a figure to display one sample from each class
+plt.figure(figsize=(12, 10))
 
-train_images = load_images('./fashion_mnist_data/train-images-idx3-ubyte')
-train_labels = load_labels('./fashion_mnist_data/train-labels-idx1-ubyte')
-test_images = load_images('./fashion_mnist_data/t10k-images-idx3-ubyte')
-test_labels = load_labels('./fashion_mnist_data/t10k-labels-idx1-ubyte')
-
-# Plot 1 sample image for each class
-fig, axes = plt.subplots(2, 5, figsize=(10, 5))
-
+# Find one sample image for each class
+samples = {}
 for i in range(10):
-    idx = np.where(train_labels == i)[0][0]  # Find the first image for each class
-    ax = axes[i // 5, i % 5]
-    ax.imshow(train_images[idx], cmap='gray')
-    ax.set_title(f"Class {i}")
-    ax.axis('off')
+    # Find the first occurrence of class i in the training set
+    idx = np.where(y_train == i)[0][0]
+    samples[i] = X_train[idx]
+
+# Create a 2x5 grid to display all 10 classes
+for i, (label, image) in enumerate(samples.items()):
+    plt.subplot(2, 5, i + 1)
+    plt.imshow(image, cmap='gray')
+    plt.title(f"{class_names[label]}")
+    plt.axis('off')  # Hide the axes for cleaner visualization
 
 plt.tight_layout()
+plt.savefig('fashion_mnist_samples.png')  # Save the figure
 plt.show()
+
+# Optional: For documentation with wandb
+import wandb
+
+# Initialize wandb run - you need to have wandb installed and be logged in
+wandb.init(project="da6401-assignment-1", name="fashion-mnist-visualization")
+
+# Log the samples to wandb
+for label, image in samples.items():
+    wandb.log({f"{class_names[label]}": wandb.Image(image, caption=class_names[label])})
+
+# Or log the entire grid
+wandb.log({"class_samples": wandb.Image(plt)})
+
+# Finish the wandb run
+wandb.finish()
