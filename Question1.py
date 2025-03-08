@@ -1,53 +1,42 @@
-# Import necessary libraries
+# Question 1
+
 import numpy as np
 import matplotlib.pyplot as plt
+import ipywidgets as widgets
 from keras.datasets import fashion_mnist
 
-# Download Fashion-MNIST dataset
-(X_train, y_train), (X_test, y_test) = fashion_mnist.load_data()
+(train_images, train_labels), (_, _) = fashion_mnist.load_data()
 
-# Define the class names for Fashion-MNIST
-class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
+class_names = [
+    "T-shirt/top", "Trouser", "Pullover", "Dress", "Coat",
+    "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"
+]
 
-# Print dataset shapes to verify data loading
-print("Training data shape:", X_train.shape)
-print("Training labels shape:", y_train.shape)
-print("Test data shape:", X_test.shape)
-print("Test labels shape:", y_test.shape)
+# Randomly select 7 unique classes out of the 10
+np.random.seed(42)  
+random_classes = np.random.choice(10, 7, replace=False)
 
-# Create a figure to display one sample from each class
-plt.figure(figsize=(12, 10))
+selected_images = []
+selected_labels = []
 
-# Find one sample image for each class
-samples = {}
-for i in range(10):
-    # Find the first occurrence of class i in the training set
-    idx = np.where(y_train == i)[0][0]
-    samples[i] = X_train[idx]
+for cls in random_classes:
+    indices = np.where(train_labels == cls)[0]
+    idx = np.random.choice(indices)
+    selected_images.append(train_images[idx])
+    selected_labels.append(class_names[cls])
 
-# Create a 2x5 grid to display all 10 classes
-for i, (label, image) in enumerate(samples.items()):
-    plt.subplot(2, 5, i + 1)
-    plt.imshow(image, cmap='gray')
-    plt.title(f"{class_names[label]}")
-    plt.axis('off')  # Hide the axes for cleaner visualization
+# Function to display the 7 images based on "step" and "index"
+def display_images(step=1, index=0):
+    fig, axes = plt.subplots(1, 7, figsize=(14, 2))
+    for i in range(7):
+        mod_idx = (i * step + index) % 7
+        axes[i].imshow(selected_images[mod_idx], cmap="gray")
+        axes[i].set_title(selected_labels[mod_idx])
+        axes[i].axis("off")
+    plt.show()
 
-plt.tight_layout()
-plt.savefig('fashion_mnist_samples.png')  # Save the figure
-plt.show()
+# sliders
+step_slider = widgets.IntSlider(min=0, max=2, step=1, value=1, description="Step")
+index_slider = widgets.IntSlider(min=0, max=35, step=1, value=0, description="Index")
 
-# Optional: For documentation with wandb
-import wandb
-
-# Initialize wandb run - you need to have wandb installed and be logged in
-wandb.init(project="da6401-assignment-1", name="fashion-mnist-visualization")
-
-# Log the samples to wandb
-for label, image in samples.items():
-    wandb.log({f"{class_names[label]}": wandb.Image(image, caption=class_names[label])})
-
-# Or log the entire grid
-wandb.log({"class_samples": wandb.Image(plt)})
-
-# Finish the wandb run
-wandb.finish()
+widgets.interactive(display_images, step=step_slider, index=index_slider)
