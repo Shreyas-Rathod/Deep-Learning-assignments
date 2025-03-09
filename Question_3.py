@@ -292,3 +292,27 @@ class NeuralNetwork:
         activations, _ = self.forward(X)
         return np.argmax(activations[-1], axis=1)
 
+
+# Load Fashion-MNIST data and preprocess
+(train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
+X_train = train_images.reshape(-1, 28 * 28) / 255.0
+X_test  = test_images.reshape(-1, 28 * 28) / 255.0
+
+
+# To change the optimizer, set optimizer to one of:
+"""
+  1) SGD
+  2) Momentum
+  3) Nesterov
+  4) RMSProp
+  5) Adam
+  6) Nadam
+"""
+nn = NeuralNetwork(input_size=784, hidden_layers=[128, 64, 32], output_size=10, optimizer="3", momentum=0.9)
+nn.train(X_train, train_labels, epochs=50, learning_rate=0.01, batch_size=128, report_interval=5)
+
+
+# Evaluate the trained model on test data
+predictions = nn.predict(X_test)
+accuracy = np.mean(predictions == test_labels)
+print(f"Test Accuracy: {accuracy * 100:.2f}%")
