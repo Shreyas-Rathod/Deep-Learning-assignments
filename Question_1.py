@@ -4,6 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import ipywidgets as widgets
 from keras.datasets import fashion_mnist
+import wandb
+
+wandb.init(project="CS24M046_DA6401_Assign1_Q1")
 
 (train_images, train_labels), (_, _) = fashion_mnist.load_data()
 
@@ -12,31 +15,45 @@ class_names = [
     "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"
 ]
 
-# Randomly select 7 unique classes out of the 10
-np.random.seed(42)  
-random_classes = np.random.choice(10, 7, replace=False)
+# To store one image per class
+unique_images = {}
+for img, label in zip(train_images, train_labels):
+    if label not in unique_images:
+        unique_images[label] = img
+    if len(unique_images) == 10:  # Stops when all classes are found
+        break
 
-selected_images = []
-selected_labels = []
+sorted_images = [unique_images[i] for i in range(10)]
+sorted_labels = [class_names[i] for i in range(10)]
 
-for cls in random_classes:
-    indices = np.where(train_labels == cls)[0]
-    idx = np.random.choice(indices)
-    selected_images.append(train_images[idx])
-    selected_labels.append(class_names[cls])
-
-# Function to display the 7 images based on "step" and "index"
 def display_images(step=1, index=0):
-    fig, axes = plt.subplots(1, 7, figsize=(14, 2))
-    for i in range(7):
-        mod_idx = (i * step + index) % 7
-        axes[i].imshow(selected_images[mod_idx], cmap="gray")
-        axes[i].set_title(selected_labels[mod_idx])
+    """
+    Shows 10 images in a 4x3 grid (3 per row).
+    The last 2 subplots remain blank.
+    """
+    fig, axes = plt.subplots(4, 3, figsize=(10, 12))
+    fig.subplots_adjust(wspace=0.5, hspace=0.5)
+
+    axes = axes.ravel()
+
+    for i in range(10):
+        img_idx = (i * step + index) % 10  # warp around 10 through images
+        axes[i].imshow(sorted_images[img_idx], cmap="gray")
+        axes[i].set_title(sorted_labels[img_idx])
         axes[i].axis("off")
+
+    for j in range(10, 12):
+        axes[j].axis("off")
+
+    wandb.log({
+        "step": step,
+        "index": index,
+        "fashion_mnist_grid": wandb.Image(fig, caption=f"Step={step}, Index={index}")
+    })
+
     plt.show()
 
-# sliders
-step_slider = widgets.IntSlider(min=0, max=2, step=1, value=1, description="Step")
+step_slider = widgets.IntSlider(min=1, max=5, step=1, value=1, description="Step")
 index_slider = widgets.IntSlider(min=0, max=35, step=1, value=0, description="Index")
 
 widgets.interactive(display_images, step=step_slider, index=index_slider)
