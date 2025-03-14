@@ -1,59 +1,45 @@
-# Question 1
-
+import wandb
 import numpy as np
 import matplotlib.pyplot as plt
-import ipywidgets as widgets
 from keras.datasets import fashion_mnist
-import wandb
 
-wandb.init(project="CS24M046_DA6401_Assign1_Q1")
+# Initialize wandb
+wandb.init(project="CS24M046_DA6401_Assign1", name="Slider-Dynamic-Images")
 
-(train_images, train_labels), (_, _) = fashion_mnist.load_data()
+# Load Fashion-MNIST dataset
+(x_train, y_train), (_, _) = fashion_mnist.load_data()
 
-class_names = [
-    "T-shirt/top", "Trouser", "Pullover", "Dress", "Coat",
+# Define class labels for Fashion-MNIST
+class_labels = [
+    "T-shirt/top", "Trouser", "Pullover", "Dress", "Coat", 
     "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"
 ]
 
-# To store one image per class
-unique_images = {}
-for img, label in zip(train_images, train_labels):
-    if label not in unique_images:
-        unique_images[label] = img
-    if len(unique_images) == 10:  # Stops when all classes are found
-        break
+# Create sliders in wandb
+wandb.config.step = 1  # Default step value
+wandb.config.index = 0  # Default index value
 
-sorted_images = [unique_images[i] for i in range(10)]
-sorted_labels = [class_names[i] for i in range(10)]
+# Function to fetch images based on step and index
+def get_sample_images(step, index):
+    sample_images = []
+    sample_labels = []
+    for i in range(10):  # 10 classes
+        idx = np.where(y_train == i)[0]  # Get all indices for class i
+        selected_idx = idx[(index + i * step) % len(idx)]  # Select based on slider values
+        sample_images.append(x_train[selected_idx])
+        sample_labels.append(class_labels[i])
+    return sample_images, sample_labels
 
-def display_images(step=1, index=0):
-    """
-    Shows 10 images in a 4x3 grid (3 per row).
-    The last 2 subplots remain blank.
-    """
-    fig, axes = plt.subplots(4, 3, figsize=(10, 12))
-    fig.subplots_adjust(wspace=0.5, hspace=0.5)
+# Logging images dynamically
+for step in range(0, 2):  # Example step range
+    for index in range(0, 35, 10):  # Example index range
+        sample_images, sample_labels = get_sample_images(step, index)
 
-    axes = axes.ravel()
+        # Log images to wandb
+        wandb.log({
+            "examples": [wandb.Image(img, caption=label) for img, label in zip(sample_images, sample_labels)],
+            "Step": step,
+            "Index": index
+        })
 
-    for i in range(10):
-        img_idx = (i * step + index) % 10  # warp around 10 through images
-        axes[i].imshow(sorted_images[img_idx], cmap="gray")
-        axes[i].set_title(sorted_labels[img_idx])
-        axes[i].axis("off")
-
-    for j in range(10, 12):
-        axes[j].axis("off")
-
-    wandb.log({
-        "step": step,
-        "index": index,
-        "fashion_mnist_grid": wandb.Image(fig, caption=f"Step={step}, Index={index}")
-    })
-
-    plt.show()
-
-step_slider = widgets.IntSlider(min=1, max=5, step=1, value=1, description="Step")
-index_slider = widgets.IntSlider(min=0, max=35, step=1, value=0, description="Index")
-
-widgets.interactive(display_images, step=step_slider, index=index_slider)
+wandb.finish()
