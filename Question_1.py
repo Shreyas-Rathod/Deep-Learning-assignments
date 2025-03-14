@@ -1,3 +1,5 @@
+# Question 1
+
 import wandb
 import numpy as np
 import matplotlib.pyplot as plt
