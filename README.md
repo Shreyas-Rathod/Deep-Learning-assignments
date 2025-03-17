@@ -170,7 +170,7 @@ This repository contains code solutions for questions related to **Fashion-MNIST
 
 ## Assignment Report
 
-[Click Here](https://wandb.ai/cs24m046-indian-institute-of-technology-madras/CS24M046_DA6401_Assign1/reports/Shreyas-Rathod-s-DA6401-Assignment-1--VmlldzoxMTc5NTUzMg) to view final report.
+[Click Here](https://api.wandb.ai/links/cs24m046-indian-institute-of-technology-madras/cqxmz3kl) to view final report.
 
 ---
 
