@@ -20,7 +20,7 @@ This repository contains code solutions for questions related to **Fashion-MNIST
 - Uses `from keras.datasets import fashion_mnist` for data loading.
 
 **File**: `Question_1.py`  
-**Key Steps**:
+✅ **Key Steps**:
 1. Load Fashion-MNIST.  
 2. Select 1 image per class.  
 3. Display a grid of 10 images.
@@ -33,7 +33,7 @@ This repository contains code solutions for questions related to **Fashion-MNIST
 - Code should be flexible to **easily change** the number of hidden layers and neurons.
 
 **File**: `Question_2.py`  
-**Key Steps**:
+✅ **Key Steps**:
 1. Define a neural network using **NumPy** (no TensorFlow/PyTorch training).  
 2. Output **probability distribution** over 10 classes (use softmax).  
 3. Test the model and report accuracy.
@@ -52,7 +52,7 @@ This repository contains code solutions for questions related to **Fashion-MNIST
 - Code should be flexible for different batch sizes.
 
 **File**: `Question_3.py`  
-**Key Steps**:
+✅ **Key Steps**:
 1. Build a backpropagation framework from scratch.  
 2. Provide separate update rules for each optimizer.  
 3. Evaluate ease of adding new optimizers.
@@ -66,7 +66,7 @@ This repository contains code solutions for questions related to **Fashion-MNIST
 - Keep 10% of the training data aside as validation data.
 
 **File**: `Question_4.py`  
-**Key Steps**:
+✅ **Key Steps**:
 1. Set up a **wandb.sweep** configuration.  
 2. Train the model for each hyperparameter combination.  
 3. Log metrics (loss, accuracy) and produce plots (e.g., parallel coordinates).
@@ -78,7 +78,7 @@ This repository contains code solutions for questions related to **Fashion-MNIST
 - Observe the **best accuracy on the validation set** across all models.  
 - Use wandb’s **accuracy vs. creation time** or summary plot to visualize top-performing runs.
 
-**Key Steps**:
+✅ **Key Steps**:
 1. Aggregate all runs or sweeps.  
 2. Display or log a **time-based** or summary plot of validation/test accuracy.  
 3. Identify best runs.
@@ -90,7 +90,7 @@ This repository contains code solutions for questions related to **Fashion-MNIST
 - **Make inferences** about which hyperparameter configurations worked and which did not.  
 - Reference the wandb **parallel coordinates plot** and correlation summary to glean insights.
 
-**Key Steps**:
+✅ **Key Steps**:
 1. Summarize interesting observations.  
 2. Discuss the effect of hidden layers, batch size, optimizer, learning rate, etc.  
 3. Possibly create bullet points or short paragraphs on insights.
@@ -103,7 +103,7 @@ This repository contains code solutions for questions related to **Fashion-MNIST
 - More marks for creativity in plotting (e.g., color-coded, annotated, etc.).
 
 **File**: `Question_7.py`  
-**Key Steps**:
+✅ **Key Steps**:
 1. Load or train the best model.  
 2. Evaluate on the test set.  
 3. Plot and log a confusion matrix with integer counts or normalized values.
@@ -116,7 +116,7 @@ This repository contains code solutions for questions related to **Fashion-MNIST
 - Provide plots or metrics to illustrate which one is better and why.
 
 **File**: `Question_8.py`  
-**Key Steps**:
+✅ **Key Steps**:
 1. Train with cross-entropy vs. squared error.  
 2. Plot or compare training curves and final accuracy.  
 3. Conclude which loss is better for classification.
