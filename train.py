@@ -179,6 +179,12 @@ class FeedForwardNet:
 
         return weight_grads, bias_grads
 
+    def predict(self, X):
+        activations, _ = self.forward(X)
+        # Return the predicted class labels (i.e., the index of the max probability)
+        return np.argmax(activations[-1], axis=1)
+
+
 # --------------------------
 # Optimizers
 # --------------------------
@@ -317,9 +323,11 @@ def main():
     print(f"Test Accuracy: {test_acc*100:.2f}%")
 
     # Log final accuracy
+
     wandb.log({"test_accuracy": test_acc})
 
     wandb.finish()
+
 
 if __name__ == "__main__":
     main()
