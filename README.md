@@ -7,7 +7,8 @@ This repository contains code solutions for questions related to **Fashion-MNIST
 1. [Overview of Questions](#overview-of-questions)   
 2. [WandB Integration](#wandb-integration)  
 3. [Key Observations and Insights](#key-observations-and-insights)  
-4. [Repository Structure](#repository-structure)  
+4. [Repository Structure](#repository-structure)
+5. [Assignment Report](#Assignment-report) 
 
 ---
 
@@ -166,6 +167,10 @@ This repository contains code solutions for questions related to **Fashion-MNIST
 ├── Question_8.py       # Q8: Cross-entropy vs. squared error comparison
 └── README.md           # This file
 ```
+
+## Assignment Report
+
+[Click Here](https://wandb.ai/cs24m046-indian-institute-of-technology-madras/CS24M046_DA6401_Assign1/reports/Shreyas-Rathod-s-DA6401-Assignment-1--VmlldzoxMTc5NTUzMg) to view final report.
 
 ---
 
