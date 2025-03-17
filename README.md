@@ -164,7 +164,6 @@ This repository contains code solutions for questions related to **Fashion-MNIST
 ├── Question_4.py       # Q4: WandB sweeps for hyperparameter tuning
 ├── Question_7.py       # Q7: Best model + confusion matrix
 ├── Question_8.py       # Q8: Cross-entropy vs. squared error comparison
-├── requirements.txt    # Dependencies
 └── README.md           # This file
 ```
 
