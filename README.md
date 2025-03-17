@@ -4,11 +4,10 @@ This repository contains code solutions for questions related to **Fashion-MNIST
 
 ## Table of Contents
 
-1. [Overview of Questions](#overview-of-questions)  
-2. [Prerequisites and Setup](#prerequisites-and-setup)  
-3. [WandB Integration](#wandb-integration)  
-4. [Key Observations and Insights](#key-observations-and-insights)  
-5. [Repository Structure](#repository-structure)  
+1. [Overview of Questions](#overview-of-questions)   
+2. [WandB Integration](#wandb-integration)  
+3. [Key Observations and Insights](#key-observations-and-insights)  
+4. [Repository Structure](#repository-structure)  
 
 ---
 
