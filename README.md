@@ -89,7 +89,6 @@ This repository contains code solutions for eight questions (Q1–Q8) related to
 - Observe the **best accuracy on the validation set** across all models.  
 - Use wandb’s **accuracy vs. creation time** or summary plot to visualize top-performing runs.
 
-**File**: `Question_5.py`  
 **Key Steps**:
 1. Aggregate all runs or sweeps.  
 2. Display or log a **time-based** or summary plot of validation/test accuracy.  
@@ -102,7 +101,6 @@ This repository contains code solutions for eight questions (Q1–Q8) related to
 - **Make inferences** about which hyperparameter configurations worked and which did not.  
 - Reference the wandb **parallel coordinates plot** and correlation summary to glean insights.
 
-**File**: `Question_6.py`  
 **Key Steps**:
 1. Summarize interesting observations.  
 2. Discuss the effect of hidden layers, batch size, optimizer, learning rate, etc.  
@@ -133,80 +131,6 @@ This repository contains code solutions for eight questions (Q1–Q8) related to
 1. Train with cross-entropy vs. squared error.  
 2. Plot or compare training curves and final accuracy.  
 3. Conclude which loss is better for classification.
-
----
-
-## Prerequisites and Setup
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/Shreyas-Rathod/Deep-Learning-assignments.git
-   cd Deep-Learning-assignments
-   ```
-2. **Install dependencies** (preferably in a virtual environment):
-   ```bash
-   pip install -r requirements.txt
-   ```
-   - **Key libraries**: `numpy`, `matplotlib`, `seaborn`, `wandb`, `scikit-learn`, `keras` (for dataset), etc.
-3. **(Optional) wandb Login**:
-   ```bash
-   wandb login
-   ```
-   If you want to track runs with Weights & Biases.
-
----
-
-## Running Each Question
-
-Below are the general commands to run each question’s code:
-
-- **Question 1**:  
-  ```bash
-  python Question_1.py
-  ```
-  Displays one sample image per class from Fashion-MNIST.
-
-- **Question 2**:  
-  ```bash
-  python Question_2.py
-  ```
-  Trains a feedforward neural network (flexible hidden layers).
-
-- **Question 3**:  
-  ```bash
-  python Question_3.py
-  ```
-  Demonstrates backprop with multiple optimizers (SGD, Momentum, Nesterov, RMSProp, Adam, Nadam).
-
-- **Question 4**:  
-  ```bash
-  python Question_4.py
-  ```
-  Runs wandb sweeps for hyperparameter tuning. Logs results and produces parallel coordinates, correlation summaries, etc.
-
-- **Question 5**:  
-  ```bash
-  python Question_5.py
-  ```
-  Shows the best validation accuracy across all runs.
-
-- **Question 6**:  
-  ```bash
-  python Question_6.py
-  ```
-  Provides insights and observations about which hyperparameters matter the most.
-
-- **Question 7**:  
-  ```bash
-  python Question_7.py
-  ```
-  Loads (or trains) the best model and prints test accuracy, plus logs a confusion matrix.
-
-- **Question 8**:  
-  ```bash
-  python Question_8.py
-  ```
-  Compares cross-entropy vs. squared error loss, plotting and discussing differences.
 
 ---
 
@@ -250,19 +174,11 @@ Below are the general commands to run each question’s code:
 ├── Question_2.py       # Q2: Feedforward network for classification
 ├── Question_3.py       # Q3: Backprop with multiple optimizers
 ├── Question_4.py       # Q4: WandB sweeps for hyperparameter tuning
-├── Question_5.py       # Q5: Best validation accuracy summary
-├── Question_6.py       # Q6: Observations and insights (parallel coords)
 ├── Question_7.py       # Q7: Best model + confusion matrix
 ├── Question_8.py       # Q8: Cross-entropy vs. squared error comparison
 ├── requirements.txt    # Dependencies
 └── README.md           # This file
 ```
-
----
-
-## License
-
-This project is published under an open-source license. See the [LICENSE](LICENSE) file for details, or include any licensing details your institution or course requires.
 
 ---
 
