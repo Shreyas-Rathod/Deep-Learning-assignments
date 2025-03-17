@@ -1,25 +1,14 @@
 # (DA6400) Deep Learning Assignment 1
 
-This repository contains code solutions for eight questions (Q1–Q8) related to **Fashion-MNIST** classification, backpropagation, hyperparameter tuning, and loss function comparisons. Each question is implemented in a separate Python file:
-
-- **Question_1.py**  
-- **Question_2.py**  
-- **Question_3.py**  
-- **Question_4.py**  
-- **Question_5.py**  
-- **Question_6.py**  
-- **Question_7.py**  
-- **Question_8.py**
+This repository contains code solutions for eight questions (Q1–Q8) related to **Fashion-MNIST** classification, backpropagation, hyperparameter tuning, and loss function comparisons. Each question is implemented in a separate Python file.
 
 ## Table of Contents
 
 1. [Overview of Questions](#overview-of-questions)  
 2. [Prerequisites and Setup](#prerequisites-and-setup)  
-3. [Running Each Question](#running-each-question)  
-4. [WandB Integration](#wandb-integration)  
-5. [Key Observations and Insights](#key-observations-and-insights)  
-6. [Repository Structure](#repository-structure)  
-7. [License](#license)  
+3. [WandB Integration](#wandb-integration)  
+4. [Key Observations and Insights](#key-observations-and-insights)  
+5. [Repository Structure](#repository-structure)  
 
 ---
 
